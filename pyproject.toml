@@ -5,9 +5,22 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "fastapi>=0.133.0",
+    "grad-cam>=1.5.5",
     "matplotlib>=3.10.8",
-    "torch>=2.10.0",
-    "torchaudio>=2.10.0",
-    "torchvision>=0.25.0",
+    "tensorboard>=2.20.0",
+    "torch==2.10.0+cu126",
+    "torchvision==0.25.0+cu126",
     "tqdm>=4.67.3",
+    "uvicorn>=0.41.0",
 ]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu126" }]
+torchvision = [{ index = "pytorch-cu126" }]
+torchaudio = [{ index = "pytorch-cu126" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true

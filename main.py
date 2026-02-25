@@ -1,6 +1,10 @@
-def main():
-    print("Hello from dl03!")
+from fastapi import FastAPI
 
+print("Hello, FastAPI!")
 
-if __name__ == "__main__":
-    main()
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
