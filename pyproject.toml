@@ -8,6 +8,7 @@ dependencies = [
     "fastapi>=0.133.0",
     "grad-cam>=1.5.5",
     "matplotlib>=3.10.8",
+    "python-multipart>=0.0.22",
     "tensorboard>=2.20.0",
     "torch==2.10.0+cu126",
     "torchvision==0.25.0+cu126",

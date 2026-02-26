@@ -17,9 +17,9 @@ app = FastAPI()
 def read_root():
     return {"Hello": "World!!"}
 
-@app.get("/infer") # body : form-data
+@app.post("/infer") # body : form-data
 def infer(file: UploadFile = File(...)):
-    allowed_ext = ['.jpg', '.jpeg', '.png', '.webp']
+    allowed_ext = ['jpg', 'jpeg', 'png', 'webp']
     ext = file.filename.split(".")[-1].lower()
 
     if ext not in allowed_ext:
@@ -35,6 +35,6 @@ def infer(file: UploadFile = File(...)):
 # 사용자 데이터는 저장한다
 # 향후 재사용 함을 공지한다
     
-    return {"result": "class1", "index" : "2"}
+    return {"result": "class1", "index" : "2", "filename": newfile_name}
 
     # 데이터 수집 --> 전처리 --> 학습 --> 테스트 --> 테스트 --> 추론 --> 피드백(--> 데이터 수집)
