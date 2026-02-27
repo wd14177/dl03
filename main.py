@@ -14,7 +14,6 @@ import io
 
 print("Hello, FastAPI!")
 
-app = FastAPI()
 model = None
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # ========================= 모델 불러오기 =========================
@@ -39,6 +38,13 @@ async def lifespan(app: FastAPI):
     model.to(device)
     model.eval()
     app.state.model = model
+    app.state.device = device
+
+    print("Model loaded successfully!")
+    yield
+    print("Shutting down...")
+
+app = FastAPI(lifespan=lifespan)
 
 # ========================= transforms 정의 =========================
 transform_test = transforms.Compose([
@@ -53,6 +59,8 @@ def read_root():
 
 @app.post("/infer") # body : form-data, post가 아닌 get을 사용할 경우 client 측에서 파일을 보낼 수 없다. get은 url에 데이터를 담아서 보내는 방식이기 때문에 파일을 보낼 수 없다. post는 body에 데이터를 담아서 보내는 방식이기 때문에 파일을 보낼 수 있다.
 async def infer(file: UploadFile = File(...)):
+    model = app.state.model
+    device = app.state.device
     allowed_ext = ['jpg', 'jpeg', 'png', 'webp']
     ext = file.filename.split(".")[-1].lower()
 
